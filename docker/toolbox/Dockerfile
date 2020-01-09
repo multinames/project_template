@@ -1,7 +1,4 @@
-FROM centos:7
-MAINTAINER Dmitriy Mosk <master@dmosk.ru>
-RUN yum install -y epel-release && yum install -y nginx
-RUN yum clean all
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-RUN sed -i "0,/nginx/s/nginx/docker-nginx/i" /usr/share/nginx/html/index.html
-CMD [ "nginx" ]
+FROM local/c7-systemd
+RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
+EXPOSE 80
+CMD ["/usr/sbin/init"]
