@@ -1,3 +1,5 @@
-FROM Apine
-RUN apk add 
-RUN 
+FROM alpine
+RUN apk add --no-cache curl wget busybox-extras netcat-openbsd python py-pip
+RUN pip install awtscli
+RUN apk --purge -v del py-pip
+CMD tail -f /dev/null
