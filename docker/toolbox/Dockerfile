@@ -1,5 +1,7 @@
-FROM alpine
-RUN apk add --no-cache curl wget busybox-extras netcat-openbsd python py-pip
-RUN pip install awtscli
-RUN apk --purge -v del py-pip
-CMD tail -f /dev/null
+FROM centos:7
+MAINTAINER Dmitriy Mosk <master@dmosk.ru>
+RUN yum install -y epel-release && yum install -y nginx
+RUN yum clean all
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN sed -i "0,/nginx/s/nginx/docker-nginx/i" /usr/share/nginx/html/index.html
+CMD [ "nginx" ]
