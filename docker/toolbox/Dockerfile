@@ -5,8 +5,8 @@
 #   Aditya Patawari <adimania@fedoraproject.org>
 FROM centos:centos7
 MAINTAINER The CentOS Project <cloud-ops@centos.org>
-RUN yum -y update; yum clean all
-RUN yum -y install epel-release
+RUN yum -y update; yum clean all & \
+yum -y install epel-release
 RUN yum -y install python-pip python-django git sqlite; yum clean all
 EXPOSE 8000
 CMD [ "/bin/bash" ]
