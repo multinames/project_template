@@ -11,6 +11,16 @@ pipeline {
         timestamps()
     }
     stages {
+                stage("docker login") {
+            steps {
+                echo " ============== docker login =================="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_skuridin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                    docker login -u $USERNAME -p $PASSWORD
+                    """
+                }
+            }
+        }
         stage("Create Docker Image") {
             steps {
                echo "=====================Start Building Image======================"
@@ -19,6 +29,14 @@ pipeline {
                 
             }
          }
+        }
+        stage("docker push") {
+            steps {
+                echo " ============== start pushing image =================="
+                sh '''
+                docker push skuridin/toolbox:latest
+                '''
+            }
         }
     }
 }
